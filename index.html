@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vitahar | Verified Food for Every Age</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <img src="vitahar-logo.png" alt="Vitahar Logo" class="logo">
+
+    <div class="brand-text">
+      <h1>Vitahar</h1>
+      <p>Verified Food for Every Age</p>
+    </div>
+  </div>
+
+
+  <div class="header-right">
+  <div class="header-search">
+    <input
+      type="text"
+      id="headerSearch"
+      placeholder="Search food (e.g. Maggi, Lays)"
+    />
+    <button id="headerSearchBtn">🔍</button>
+  </div>
+</div>
+
+</header>
+
+
+
+<main class="page-bg">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Know What You Eat. Trust Your Health.</h2>
+      <p>
+        Vitahar helps Indian citizens verify whether packaged food
+        is safe and healthy for their age.
+      </p>
+    </div>
+  </section>
+
+  <!-- FORM -->
+<section class="form-section">
+  <div class="advanced-form-card">
+ 
+    <div class="scan-option">
+  <p>Quick option</p>
+  <button type="button" id="startScan" class="scan-btn">
+    📷 Scan Food QR / Barcode
+  </button>
+
+  <div class="scanner-box">
+    <video id="video" autoplay></video>
+  </div>
+</div>
+
+    <div class="form-title">
+      <h2>Food Safety Verification</h2>
+      <p>Check whether a packaged food is safe for your age</p>
+    </div>
+
+    <form id="foodForm" class="advanced-form">
+
+      <div class="input-group">
+  <input type="text" id="productName" required />
+  <label>Product Name</label>
+</div>
+
+<div class="input-group">
+  <input type="text" id="companyName" required />
+  <label>Company Name</label>
+</div>
+
+
+      <div class="input-group">
+  <input type="date" id="dob" required />
+  <label>Date of Birth</label>
+</div>
+
+
+      <button type="submit" class="cta-btn">
+        Verify Food Safety
+      </button>
+
+    </form>
+
+    <div id="result"></div>
+       <div id="nutritionSection" style="display:none; margin-top:30px;">
+  <h3 style="color:#2e7d32; text-align:center;">Nutrition Analysis</h3>
+
+  <div class="table-wrapper">
+  <table class="nutrition-table">
+    <thead>
+      <tr>
+        <th>Nutrient</th>
+        <th>In Product</th>
+        <th>Recommended</th>
+      </tr>
+    </thead>
+    <tbody id="nutritionTable"></tbody>
+  </table>
+</div>
+
+<div class="chart-wrapper">
+  <canvas id="nutritionChart"></canvas>
+</div>
+
+</div>
+
+  </div>
+</section>
+
+</main>
+<footer class="footer">
+  <div class="footer-container">
+
+    <div class="footer-brand">
+      <h3>Vitahar</h3>
+      <p>Verified Food for Every Age</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li>Home</li>
+        <li>Food Safety Check</li>
+        <li>About Vitahar</li>
+        <li>Contact</li>
+      </ul>
+    </div>
+
+    <div class="footer-info">
+      <h4>Powered By</h4>
+      <p>FSSAI Guidelines</p>
+      <p>WHO Nutrition Standards</p>
+      <p>Blockchain-based Verification</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Vitahar | Built for INNOVIT | All Rights Reserved
+  </div>
+</footer>
+
+
+<script src="script.js"></script>
+</body>
+</html>

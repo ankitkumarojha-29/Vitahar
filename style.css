@@ -1,0 +1,613 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f9f4;
+  color: #333;
+}
+
+
+
+/* Header with fade effect */
+.header {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  /* WHITE → ORANGE FADE */
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,
+    #ffffff 25%,
+    #ffe0b2 45%,
+    #ffcc80 65%,
+    #ff9800 100%
+  );
+
+  border-bottom: 3px solid #2e7d32;
+}
+
+/* Left content */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: 40px;
+}
+
+/* Logo */
+.logo {
+  width: 55px;
+  background: #ffffff; /* keeps logo crisp */
+}
+
+/* Brand text */
+.brand-text h1 {
+  margin: 0;
+  font-size: 26px;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.brand-text p {
+  margin: 2px 0 0 0;
+  font-size: 14px;
+  color: #444;
+}
+/* HEADER SEARCH BAR */
+.header-right {
+  margin-left: auto;
+  padding-right: 40px;
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 30px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.header-search input {
+  border: none;
+  outline: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.header-search button {
+  border: none;
+  background: linear-gradient(135deg, #ff9800, #2e7d32);
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-search button:hover {
+  transform: scale(1.05);
+}
+
+
+
+/* Hero Section with blended background */
+.hero {
+  height: 320px;
+
+  /* PHOTO + COLOR BLEND */
+  background:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 243, 224, 0.75),
+      rgba(255, 152, 0, 0.65)
+    ),
+    url("bg-food-thinking.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+}
+
+/* Text container */
+.hero-content {
+  max-width: 600px;
+  padding-left: 40px;
+}
+
+/* Text styles */
+.hero h2 {
+  color: #2e7d32;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 16px;
+  color: #333;
+}
+
+
+.hero h2 {
+  color: #140aa1;
+  margin-bottom: 10px;
+}
+/* FORM SECTION */
+.form-section {
+  display: flex;
+  justify-content: center;
+  padding: 90px 20px;
+}
+
+/* MAIN CARD */
+.advanced-form-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 40px 35px;
+
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+
+  border-radius: 20px;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.2);
+
+  animation: fadeUp 0.9s ease forwards;
+}
+
+/* TITLE */
+.form-title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-title h2 {
+  margin: 0;
+  font-size: 26px;
+  color: #2e7d32;
+}
+
+.form-title p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* FORM */
+.advanced-form {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* FLOATING INPUT GROUP */
+.input-group {
+  position: relative;
+}
+
+/* INPUTS */
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 16px 14px;
+  font-size: 15px;
+
+  border-radius: 14px;
+  border: 1.5px solid #ddd;
+  background: transparent;
+
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* LABEL */
+.input-group label {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 14px;
+  color: #777;
+  background: white;
+  padding: 0 6px;
+
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+/* FLOAT LABEL UP */
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group select:focus + label,
+.input-group select:valid + label {
+  top: -8px;
+  font-size: 12px;
+  color: #2e7d32;
+}
+
+/* INPUT FOCUS */
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.15);
+}
+
+/* BUTTON */
+.cta-btn {
+  margin-top: 10px;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+
+  background: linear-gradient(
+    135deg,
+    #ff9800,
+    #2e7d32
+  );
+
+  transition: all 0.3s ease;
+}
+
+/* BUTTON HOVER */
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* RESULT */
+#result {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+/* Keyframes */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Input focus animation */
+input, select {
+  transition: all 0.3s ease;
+  border: 1px solid #bbb;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #2e7d32;
+  box-shadow: 0 0 8px rgba(46, 125, 50, 0.3);
+  transform: scale(1.02);
+}
+button {
+  background: #2e7d32;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #1b5e20;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+#result {
+  animation: pulse 0.6s ease;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+/* BACKGROUND IMAGE FOR ALL CONTENT */
+.page-bg {
+  min-height: calc(100vh - 160px);
+
+  background:
+    linear-gradient(
+      rgba(255, 255, 255, 0.85),
+      rgba(255, 243, 224, 0.75),
+      rgba(255, 152, 0, 0.65)
+    ),
+    url("bg-food-thinking.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.hero,
+.form-section {
+  background: transparent !important;
+}
+.advanced-form-card {
+  background: rgba(255, 255, 255, 0.92);
+}
+/* FOOTER */
+.footer {
+  background: linear-gradient(
+    to right,
+    #1b5e20,
+    #2e7d32,
+    #ff9800
+  );
+  color: #ffffff;
+  margin-top: 60px;
+}
+
+/* Footer main container */
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  padding: 40px 60px;
+}
+
+/* Brand section */
+.footer-brand h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.footer-brand p {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #f1f1f1;
+}
+
+/* Links */
+.footer-links h4,
+.footer-info h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #ffe0b2;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.footer-links li:hover {
+  color: #ffe0b2;
+}
+
+/* Info */
+.footer-info p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Bottom strip */
+.footer-bottom {
+  text-align: center;
+  padding: 14px;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* SCAN OPTION INSIDE FORM */
+.scan-option {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.scan-option p {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.scan-btn {
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 1.5px solid #ff9800;
+  background: transparent;
+  color: #ff9800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.scan-btn:hover {
+  background: #ff9800;
+  color: white;
+}
+
+/* Scanner camera */
+.scan-option .scanner-box {
+  margin-top: 15px;
+  display: none;
+}
+
+.scan-option video {
+  width: 100%;
+  border-radius: 14px;
+  border: 2px solid #2e7d32;
+}
+/* Nutrition table */
+.nutrition-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0 25px;
+}
+
+.nutrition-table th,
+.nutrition-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 14px;
+}
+
+.nutrition-table th {
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* Chart spacing */
+#nutritionChart {
+  margin-top: 20px;
+}
+/* Chart container to control height */
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;   /* 👈 adjust here */
+  margin-top: 15px;
+}
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+   ========================= */
+   @media (max-width: 768px) {
+
+  .header-right {
+    padding-right: 16px;
+  }
+
+  .header-search input {
+    width: 140px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Header */
+  .header {
+    height: auto;
+    padding: 12px 0;
+  }
+
+  .header-left {
+    padding-left: 16px;
+    gap: 10px;
+  }
+
+  .logo {
+    width: 42px;
+  }
+
+  .brand-text h1 {
+    font-size: 20px;
+  }
+
+  .brand-text p {
+    font-size: 12px;
+  }
+
+  /* Hero */
+  .hero {
+    height: auto;
+    padding: 30px 0;
+  }
+
+  .hero-content {
+    padding: 0 16px;
+  }
+
+  .hero h2 {
+    font-size: 22px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  /* Form section */
+  .form-section {
+    padding: 50px 12px;
+  }
+
+  .advanced-form-card {
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+
+  /* Inputs */
+  .input-group input,
+  .input-group select {
+    padding: 14px 12px;
+    font-size: 14px;
+  }
+
+  /* Button */
+  .cta-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  /* Scan button */
+  .scan-btn {
+    width: 100%;
+  }
+
+  /* Nutrition table */
+  .nutrition-table {
+    font-size: 13px;
+  }
+
+  /* Table horizontal scroll */
+  .nutrition-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* Chart */
+  .chart-wrapper {
+    height: 180px;
+  }
+
+  /* Footer */
+  .footer-container {
+    padding: 30px 20px;
+    gap: 20px;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+  }
+}
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
