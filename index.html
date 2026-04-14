@@ -22,13 +22,15 @@
 
 
   <div class="header-right">
-  <div class="header-search">
+  <div class="header-search" style="position:relative;">
     <input
       type="text"
       id="headerSearch"
       placeholder="Search food (e.g. Maggi, Lays)"
+      autocomplete="off"
     />
     <button id="headerSearchBtn">🔍</button>
+    <div id="headerSuggestions" class="autocomplete-dropdown"></div>
   </div>
 </div>
 
@@ -71,16 +73,17 @@
 
     <form id="foodForm" class="advanced-form">
 
-      <div class="input-group">
-  <input type="text" id="productName" required />
+      <div class="input-group" style="position:relative;">
+  <input type="text" id="productName" required autocomplete="off" />
   <label>Product Name</label>
+  <div id="productSuggestions" class="autocomplete-dropdown"></div>
 </div>
 
-<div class="input-group">
+<div class="input-group" style="position:relative;">
   <input type="text" id="companyName" required />
   <label>Company Name</label>
+  <div id="companySuggestions" class="autocomplete-dropdown"></div>  <!-- ADD THIS -->
 </div>
-
 
       <div class="input-group">
   <input type="date" id="dob" required />
