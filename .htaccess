@@ -1,0 +1,103 @@
+# Charset: keep HTML/CSS/JS text readable on hosting
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .json .xml .txt
+AddType "application/javascript; charset=UTF-8" .js
+AddType "text/css; charset=UTF-8" .css
+AddType application/vnd.android.package-archive .apk
+
+# -- Force HTTPS --------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# -- Disable directory listing -------------------------------------
+Options -Indexes
+
+# -- Security: protect sensitive files ------------------------------
+<Files ".env">
+  Order allow,deny
+  Deny from all
+</Files>
+<FilesMatch "\.(bak|log|sh|sql|swp|orig)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+# Block any leftover test/debug files (e.g. test-gemini.php, debug.php)
+<FilesMatch "^(test-|debug|phpinfo)">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# -- GZIP Compression ----------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+  AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/xml application/xhtml+xml
+  AddOutputFilterByType DEFLATE image/svg+xml font/ttf font/otf font/woff font/woff2
+</IfModule>
+
+# -- Browser Caching -------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Images - cache for 1 year
+  ExpiresByType image/jpeg        "access plus 1 year"
+  ExpiresByType image/png         "access plus 1 year"
+  ExpiresByType image/webp        "access plus 1 year"
+  ExpiresByType image/gif         "access plus 1 year"
+  ExpiresByType image/svg+xml     "access plus 1 year"
+  ExpiresByType image/x-icon      "access plus 1 year"
+  ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+
+  # Fonts - cache for 1 year
+  ExpiresByType font/ttf          "access plus 1 year"
+  ExpiresByType font/otf          "access plus 1 year"
+  ExpiresByType font/woff         "access plus 1 year"
+  ExpiresByType font/woff2        "access plus 1 year"
+
+  # CSS & JS - cache for 1 month (use ?v=N in URLs to bust cache)
+  ExpiresByType text/css          "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript   "access plus 1 month"
+
+  # HTML - cache for 1 hour
+  ExpiresByType text/html         "access plus 1 hour"
+
+  # Webmanifest & JSON
+  ExpiresByType application/manifest+json "access plus 1 week"
+  ExpiresByType application/json  "access plus 0 seconds"
+</IfModule>
+
+# -- Cache-Control headers --------------------------------------------
+<IfModule mod_headers.c>
+  # Immutable assets (images, fonts) - long cache
+  <FilesMatch "\.(webp|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # CSS & JS (versioned via ?v= query string)
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # HTML - short cache
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+
+  # Security headers (bonus)
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# -- Enable Keep-Alive -----------------------------------------------
+<IfModule mod_headers.c>
+  Header set Connection keep-alive
+</IfModule>
+
+# -- Custom Error Pages ---------------------------------------------
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html

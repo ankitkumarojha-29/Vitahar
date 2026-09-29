@@ -1,0 +1,100 @@
+# ==============================================================
+# Git Ignore Configuration for Vitahar
+# Prevents exposing secrets, API keys, build artifacts, & binaries
+# ==============================================================
+
+# --------------------------------------------------------------
+# 1. Environment & Secret Credentials (CRITICAL - NEVER COMMIT)
+# --------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.crt
+
+# Dynamic admin configuration overrides containing credentials
+admin_config.php
+
+# Local test & debug scripts that may contain temporary keys
+test-*.php
+test-gemini.php
+
+# --------------------------------------------------------------
+# 2. Build Artifacts, Packages & Binaries
+# --------------------------------------------------------------
+# Android & Flutter application bundles
+*.apk
+*.aab
+vitahar-app.apk
+
+# Archives & binaries
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# --------------------------------------------------------------
+# 3. Flutter & Dart (Mobile App)
+# --------------------------------------------------------------
+**/mobile_app/.dart_tool/
+**/mobile_app/.flutter-plugins
+**/mobile_app/.flutter-plugins-dependencies
+**/mobile_app/.pub-cache/
+**/mobile_app/.pub/
+**/mobile_app/build/
+**/mobile_app/coverage/
+**/mobile_app/.widget_preview/
+
+# Android build & secrets
+**/mobile_app/android/.gradle/
+**/mobile_app/android/local.properties
+**/mobile_app/android/**/build/
+**/mobile_app/android/key.properties
+**/mobile_app/android/app/google-services.json
+*.keystore
+*.jks
+
+# iOS & macOS build & secrets
+**/mobile_app/ios/Flutter/ephemeral/
+**/mobile_app/ios/Flutter/Generated.xcconfig
+**/mobile_app/ios/Flutter/flutter_export_environment.sh
+**/mobile_app/ios/Pods/
+**/mobile_app/ios/Runner/GeneratedPluginRegistrant.*
+**/mobile_app/ios/Runner/GoogleService-Info.plist
+**/mobile_app/macos/Flutter/ephemeral/
+**/mobile_app/macos/Flutter/GeneratedPluginRegistrant.*
+
+# --------------------------------------------------------------
+# 4. Logs & Server Files
+# --------------------------------------------------------------
+*.log
+error_log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --------------------------------------------------------------
+# 5. IDE & Editor Configs
+# --------------------------------------------------------------
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+*.swp
+*~
+
+# --------------------------------------------------------------
+# 6. Operating System Files
+# --------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini

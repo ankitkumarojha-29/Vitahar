@@ -1,0 +1,19 @@
+name: vitahar_app
+description: A new Flutter project for Vitahar
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  encrypt: ^5.0.3
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  mobile_scanner: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/vitahar-logo.png

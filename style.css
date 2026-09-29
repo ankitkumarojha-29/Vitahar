@@ -5,73 +5,158 @@
   font-family: Arial, sans-serif;
 }
 
+html,
 body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   background: #f4f9f4;
   color: #333;
 }
 
-
-
-/* Header with fade effect */
+/* Header with responsive fluid layout */
 .header {
-  height: 80px;
+  min-height: 74px;
+  height: auto;
   width: 100%;
   display: flex;
   align-items: center;
-
-  /* WHITE → ORANGE FADE */
-  background: linear-gradient(
-    to right,
-    #ffffff 0%,
-    #ffffff 25%,
-    #ffe0b2 45%,
-    #ffcc80 65%,
-    #ff9800 100%
-  );
-
+  justify-content: space-between;
+  padding: 10px clamp(16px, 3.5vw, 40px);
+  background: linear-gradient(to right,
+      #ffffff 0%,
+      #ffffff 25%,
+      #ffe0b2 45%,
+      #ffcc80 65%,
+      #ff9800 100%);
   border-bottom: 3px solid #2e7d32;
+  position: relative;
+  z-index: 100;
+  box-sizing: border-box;
 }
 
-/* Left content */
 .header-left {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding-left: 40px;
+  gap: 12px;
+  padding-left: 0;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  flex-shrink: 0;
 }
 
-/* Logo */
+.header-left:hover {
+  opacity: 0.85;
+}
+
 .logo {
-  width: 55px;
-  background: #ffffff; /* keeps logo crisp */
+  width: 52px;
+  height: auto;
+  /* prevent aspect-ratio distortion */
+  background: #ffffff;
+  display: block;
 }
 
-/* Brand text */
+img {
+  height: auto;
+  max-width: 100%;
+}
+
+/* global safe default */
+
 .brand-text h1 {
   margin: 0;
-  font-size: 26px;
+  font-size: clamp(20px, 2.5vw, 26px);
   color: #2e7d32;
   font-weight: bold;
+  line-height: 1.2;
 }
 
 .brand-text p {
   margin: 2px 0 0 0;
-  font-size: 14px;
+  font-size: clamp(11px, 1.3vw, 14px);
   color: #444;
-}
-/* HEADER SEARCH BAR */
-.header-right {
-  margin-left: auto;
-  padding-right: 40px;
+  line-height: 1.2;
 }
 
+/* HEADER RIGHT — CONTROLS CONTAINER */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 14px);
+  margin-left: auto;
+  padding-right: 0;
+}
+
+/* HEADER APP DOWNLOAD BUTTON */
+.header-app-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(46, 125, 50, 0.3);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+}
+
+.header-app-dl-btn:hover {
+  background: linear-gradient(135deg, #1b5e20 0%, #0d47a1 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(46, 125, 50, 0.45);
+}
+
+.header-app-dl-btn .dl-badge-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Label toggling across screen sizes */
+.dl-label-desktop {
+  display: inline;
+}
+
+.dl-label-tablet {
+  display: none;
+}
+
+/* HEADER SEARCH BAR */
 .header-search {
   display: flex;
   align-items: center;
   background: white;
   border-radius: 30px;
-  padding: 6px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  padding: 5px 6px 5px 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  position: relative;
+  /* anchor for dropdown */
+  width: 270px;
+  /* desktop balanced width */
+  transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Expand smoothly on focus */
+.header-search:focus-within {
+  width: 315px;
+  box-shadow: 0 6px 22px rgba(46, 125, 50, 0.25);
+}
+
+/* Wrapper makes the animated placeholder align correctly */
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .header-search input {
@@ -80,7 +165,83 @@ body {
   padding: 8px 14px;
   border-radius: 20px;
   font-size: 14px;
-  width: 200px;
+  width: 100%;
+  /* fill wrapper — not fixed 200px */
+  min-width: 180px;
+  /* desktop minimum */
+  background: transparent;
+  position: relative;
+  z-index: 2;
+  /* above animated placeholder */
+  color: #333;
+}
+
+/* Hide native placeholder so our animated one shows */
+#headerSearch::placeholder {
+  color: transparent;
+}
+
+/* ── Flipkart-style animated placeholder ─────────── */
+.search-placeholder-anim {
+  position: absolute;
+  left: 14px;
+  right: 40px;
+  /* don't overlap the search button */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 14px;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  /* below input (z-index:2) so clicks pass through */
+}
+
+.search-prefix {
+  flex-shrink: 0;
+  color: #bbb;
+}
+
+.search-anim-word {
+  display: inline-block;
+  color: #aaa;
+}
+
+/* Slide-in: word enters from the right */
+@keyframes wordSlideIn {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide-out: word exits to the left */
+@keyframes wordSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+}
+
+.search-anim-word.slide-in {
+  animation: wordSlideIn 0.38s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.search-anim-word.slide-out {
+  animation: wordSlideOut 0.28s ease-in forwards;
 }
 
 .header-search button {
@@ -95,64 +256,86 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .header-search button:hover {
   transform: scale(1.05);
 }
 
-
-
-/* Hero Section with blended background */
+/* Hero */
 .hero {
-  height: 320px;
-
-  /* PHOTO + COLOR BLEND */
+  min-height: 240px;
+  height: auto;
+  padding: clamp(28px, 4vw, 48px) 0;
   background:
-    linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.85),
-      rgba(255, 243, 224, 0.75),
-      rgba(255, 152, 0, 0.65)
-    ),
-    url("bg-food-thinking.png");
-
+    linear-gradient(to right,
+      rgba(255, 255, 255, 0.88),
+      rgba(255, 243, 224, 0.78),
+      rgba(255, 152, 0, 0.65)),
+    url("bg-food-thinking.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   display: flex;
   align-items: center;
+  box-sizing: border-box;
 }
 
-/* Text container */
 .hero-content {
-  max-width: 600px;
-  padding-left: 40px;
+  max-width: 650px;
+  padding-left: clamp(16px, 4vw, 40px);
+  padding-right: clamp(16px, 3vw, 24px);
+  box-sizing: border-box;
 }
 
-/* Text styles */
-.hero h2 {
-  color: #2e7d32;
-  font-size: 32px;
-  margin-bottom: 10px;
-}
+/* ── TYPEWRITER HERO TEXT ─────────────────────────────── */
 
-.hero p {
-  font-size: 16px;
-  color: #333;
-}
-
-
-.hero h2 {
+/* Reserve minimal height so the hero doesn't jump while text types */
+.hero-typewriter {
   color: #140aa1;
-  margin-bottom: 10px;
+  font-size: clamp(22px, 3.5vw, 32px);
+  margin-bottom: 8px;
+  min-height: 1.3em;
+  line-height: 1.3;
 }
-/* FORM SECTION */
+
+.hero-subtext {
+  font-size: clamp(14px, 1.8vw, 16px);
+  color: #333;
+  min-height: 2.8em;
+  line-height: 1.5;
+}
+
+/* Blinking cursor character */
+.type-cursor {
+  display: inline-block;
+  color: #140aa1;
+  font-weight: 300;
+  opacity: 1;
+  animation: cursorBlink 0.75s step-end infinite;
+  margin-left: 1px;
+  user-select: none;
+}
+
+@keyframes cursorBlink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* FORM SECTION — naturally positioned right below Hero */
 .form-section {
   display: flex;
   justify-content: center;
-  padding: 90px 20px;
+  padding: clamp(28px, 4vw, 55px) 16px;
+  box-sizing: border-box;
 }
 
 /* MAIN CARD */
@@ -160,15 +343,42 @@ body {
   width: 100%;
   max-width: 520px;
   padding: 40px 35px;
-
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
-  box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.2);
-
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.12);
   animation: fadeUp 0.9s ease forwards;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: stretch;
+}
+
+.clear-btn {
+  width: auto;
+  height: auto;
+  min-width: 50px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #e65100, #bf360c);
+  transition: all 0.3s ease;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(230, 81, 0, 0.3);
 }
 
 /* TITLE */
@@ -207,11 +417,9 @@ body {
   width: 100%;
   padding: 16px 14px;
   font-size: 15px;
-
   border-radius: 14px;
   border: 1.5px solid #ddd;
   background: transparent;
-
   outline: none;
   transition: all 0.3s ease;
 }
@@ -222,21 +430,19 @@ body {
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-
   font-size: 14px;
   color: #777;
   background: white;
   padding: 0 6px;
-
   pointer-events: none;
   transition: all 0.25s ease;
 }
 
 /* FLOAT LABEL UP */
-.input-group input:focus + label,
-.input-group input:valid + label,
-.input-group select:focus + label,
-.input-group select:valid + label {
+.input-group input:focus+label,
+.input-group input:not(:placeholder-shown)+label,
+.input-group select:focus+label,
+.input-group select:valid+label {
   top: -8px;
   font-size: 12px;
   color: #2e7d32;
@@ -255,22 +461,15 @@ body {
   padding: 16px;
   border-radius: 16px;
   border: none;
-
   font-size: 16px;
   font-weight: bold;
   color: white;
   cursor: pointer;
-
-  background: linear-gradient(
-    135deg,
-    #ff9800,
-    #2e7d32
-  );
-
+  background: linear-gradient(135deg, #ff9800, #2e7d32);
   transition: all 0.3s ease;
+  flex: 1;
 }
 
-/* BUTTON HOVER */
 .cta-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
@@ -282,8 +481,8 @@ body {
   text-align: center;
   font-size: 16px;
   font-weight: bold;
+  animation: pulse 0.6s ease;
 }
-
 
 /* Keyframes */
 @keyframes fadeUp {
@@ -291,26 +490,45 @@ body {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-/* Input focus animation */
-input, select {
-  transition: all 0.3s ease;
-  border: 1px solid #bbb;
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
-input:focus, select:focus {
+/* NOTE: Input borders are set per-component (.input-group input).
+   Only set transitions globally to avoid conflicts. */
+input,
+select {
+  transition: all 0.3s ease;
+}
+
+/* Global focus fallback (non-input-group inputs) */
+input:focus,
+select:focus {
   outline: none;
   border-color: #2e7d32;
   box-shadow: 0 0 8px rgba(46, 125, 50, 0.3);
-  transform: scale(1.02);
+  /* no transform: causes layout shift inside form cards */
 }
+
+/* Button base — only transition, colour handled per-component */
 button {
-  background: #2e7d32;
-  color: white;
   transition: all 0.3s ease;
 }
 
@@ -319,51 +537,169 @@ button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
-#result {
-  animation: pulse 0.6s ease;
+
+html {
+  scroll-behavior: smooth;
 }
 
-@keyframes pulse {
-  0% { transform: scale(0.95); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+.hide-section {
+  display: none !important;
 }
-/* BACKGROUND IMAGE FOR ALL CONTENT */
+
+.info-section {
+  padding: 60px 20px 80px;
+  background: transparent;
+  min-height: calc(100vh - 160px);
+}
+
+.info-card {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 36px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 22px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.info-card h2 {
+  margin-bottom: 20px;
+  color: #2e7d32;
+  font-size: 28px;
+  border-bottom: 2px solid #e8f5e9;
+  padding-bottom: 12px;
+}
+
+.info-card h3 {
+  color: #e65100;
+  font-size: 18px;
+  margin: 24px 0 12px;
+}
+
+.info-card p {
+  margin-bottom: 14px;
+  line-height: 1.8;
+  color: #444;
+  font-size: 15px;
+}
+
+.info-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-card ul li {
+  padding: 8px 0;
+  font-size: 15px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+  line-height: 1.6;
+}
+
+.info-card ul li:last-child {
+  border-bottom: none;
+}
+
+.feedback-card {
+  max-width: 700px;
+}
+
+.feedback-form .input-group {
+  margin-bottom: 22px;
+}
+
+.feedback-form textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.footer-links ul li a.active-link {
+  color: #ff9800;
+  font-weight: bold;
+}
+
+.input-group textarea {
+  width: 100%;
+  padding: 16px 14px;
+  font-size: 15px;
+  border-radius: 14px;
+  border: 1.5px solid #ddd;
+  background: transparent;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-group textarea:focus+label,
+.input-group textarea:valid+label,
+.input-group textarea:not(:placeholder-shown)+label {
+  top: -8px;
+  font-size: 12px;
+  color: #2e7d32;
+}
+
+.date-label {
+  top: -8px !important;
+  font-size: 12px !important;
+  color: #2e7d32 !important;
+}
+
+.input-group textarea+label {
+  top: 16px;
+}
+
+.feedback-result {
+  margin-top: 18px;
+  font-size: 15px;
+  color: #2e7d32;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links ul li {
+  margin: 8px 0;
+}
+
+.footer-links ul li a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #ff9800;
+}
+
+/* BACKGROUND */
 .page-bg {
   min-height: calc(100vh - 160px);
-
   background:
-    linear-gradient(
-      rgba(255, 255, 255, 0.85),
+    linear-gradient(rgba(255, 255, 255, 0.85),
       rgba(255, 243, 224, 0.75),
-      rgba(255, 152, 0, 0.65)
-    ),
-    url("bg-food-thinking.png");
-
+      rgba(255, 152, 0, 0.65)),
+    url("bg-food-thinking.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .hero,
 .form-section {
   background: transparent !important;
 }
-.advanced-form-card {
-  background: rgba(255, 255, 255, 0.92);
-}
+
 /* FOOTER */
 .footer {
-  background: linear-gradient(
-    to right,
-    #1b5e20,
-    #2e7d32,
-    #ff9800
-  );
+  background: linear-gradient(to right, #1b5e20, #2e7d32, #ff9800);
   color: #ffffff;
   margin-top: 60px;
 }
 
-/* Footer main container */
 .footer-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -371,7 +707,6 @@ button:hover {
   padding: 40px 60px;
 }
 
-/* Brand section */
 .footer-brand h3 {
   margin: 0;
   font-size: 24px;
@@ -384,7 +719,6 @@ button:hover {
   color: #f1f1f1;
 }
 
-/* Links */
 .footer-links h4,
 .footer-info h4 {
   margin-bottom: 10px;
@@ -408,13 +742,11 @@ button:hover {
   color: #ffe0b2;
 }
 
-/* Info */
 .footer-info p {
   font-size: 14px;
   margin-bottom: 6px;
 }
 
-/* Bottom strip */
 .footer-bottom {
   text-align: center;
   padding: 14px;
@@ -422,7 +754,7 @@ button:hover {
   background: rgba(0, 0, 0, 0.15);
 }
 
-/* SCAN OPTION INSIDE FORM */
+/* SCAN OPTION */
 .scan-option {
   text-align: center;
   margin-bottom: 25px;
@@ -452,10 +784,10 @@ button:hover {
   color: white;
 }
 
-/* Scanner camera */
 .scan-option .scanner-box {
   margin-top: 15px;
   display: none;
+  position: relative;
 }
 
 .scan-option video {
@@ -463,7 +795,71 @@ button:hover {
   border-radius: 14px;
   border: 2px solid #2e7d32;
 }
-/* Nutrition table */
+
+/* CLOSE SCAN BUTTON */
+.close-scan-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  width: auto;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(183, 28, 28, 0.92);
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.close-scan-btn:hover {
+  background: #7f0000;
+  transform: none;
+}
+
+/* SCAN STATUS */
+.scan-status {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  background: #f9f9f9;
+  text-align: center;
+  min-height: 38px;
+  word-break: break-word;
+}
+
+/* SCANNER BOX */
+#scannerBox {
+  display: none;
+  margin-top: 16px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #2e7d32;
+  background: #000;
+  position: relative;
+}
+
+#qr-reader {
+  width: 100% !important;
+  border: none !important;
+}
+
+#qr-reader video {
+  width: 100% !important;
+  border-radius: 12px;
+}
+
+#qr-reader__scan_region {
+  background: transparent !important;
+}
+
+#qr-reader__dashboard {
+  display: none !important;
+}
+
+/* NUTRITION TABLE */
 .nutrition-table {
   width: 100%;
   border-collapse: collapse;
@@ -483,131 +879,698 @@ button:hover {
   color: #333;
 }
 
-/* Chart spacing */
 #nutritionChart {
   margin-top: 20px;
 }
-/* Chart container to control height */
+
 .chart-wrapper {
   position: relative;
   width: 100%;
-  height: 220px;   /* 👈 adjust here */
+  height: 220px;
   margin-top: 15px;
 }
-/* =========================
-   MOBILE RESPONSIVE DESIGN
-   ========================= */
-   @media (max-width: 768px) {
 
-  .header-right {
-    padding-right: 16px;
-  }
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
 
-  .header-search input {
-    width: 140px;
-    font-size: 13px;
+/* VERDICT CARD */
+.verdict-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  margin-top: 22px;
+  animation: pulse 0.5s ease;
+}
+
+.verdict-emoji {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.verdict-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.verdict-text strong {
+  font-size: 16px;
+}
+
+.verdict-text small {
+  font-size: 12px;
+  color: #555;
+}
+
+/* SOURCE BADGES */
+.source-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.3px;
+}
+
+.source-badge.local {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.source-badge.ai {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.source-badge.ai.estimated {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+/* AI LOADING SPINNER */
+.ai-loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  padding: 18px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #ddd;
+  border-top-color: #ff9800;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-@media (max-width: 768px) {
+tr.over-limit td {
+  background: #fff8f0;
+}
 
-  /* Header */
+/* =============================================
+   AUTOCOMPLETE DROPDOWN
+   ============================================= */
+.autocomplete-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  /* NOTE: no overflow:hidden here — it blocks touch-scroll on iOS */
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  /* smooth iOS momentum scroll */
+  overscroll-behavior: contain;
+  /* prevent page scroll bleed */
+  scroll-snap-type: none;
+  animation: dropIn 0.18s ease;
+  isolation: isolate;
+  /* Clip corners without blocking scroll events */
+  border-radius: 14px;
+}
+
+@keyframes dropIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Each suggestion row — flex so badge aligns right */
+.autocomplete-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  min-height: 48px;
+  /* touch-friendly tap target */
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  border-bottom: 1px solid #f5f5f5;
+  transition: background 0.15s ease;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  gap: 8px;
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item:active {
+  background: #fff8f0;
+}
+
+.autocomplete-item strong {
+  color: #ff9800;
+  font-weight: 700;
+}
+
+/* Product name inside suggestion */
+.ac-name {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+.ac-title,
+.ac-company {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ac-company {
+  margin-top: 2px;
+  font-size: 12px;
+  color: #777;
+}
+
+/* Source badge inside suggestion (OFF / USDA / 📦 Local) */
+.ac-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.6;
+}
+
+/* "Searching online…" loader row */
+.ac-loader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #888;
+  font-style: italic;
+  justify-content: center;
+}
+
+/* Header suggestions — full width of .header-search, anchored left */
+#headerSuggestions {
+  min-width: 100%;
+  left: 0;
+  right: 0;
+  border-radius: 14px;
+}
+
+.company-icon {
+  margin-right: 4px;
+}
+
+/* Verdict reason tags */
+.verdict-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.reason-tag {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+}
+
+.safe-tag {
+  background: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
+}
+
+/* ==============================================
+   LEGACY PROMO CARD SUPPRESSION
+   (Guarantees no raw/unstyled text appears anywhere)
+   ============================================== */
+.app-promo-card,
+.app-promo-content,
+.app-promo-text,
+.app-promo-actions,
+.app-dl-action-btn,
+.app-promo-icon-wrap,
+.app-promo-tag,
+.app-promo-title,
+.app-promo-desc {
+  display: none !important;
+}
+
+/* ==============================================
+   FLOATING ANDROID APP DOWNLOAD STRIP
+   ============================================== */
+.floating-app-strip,
+.android-download-float {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  bottom: auto;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+  color: #ffffff;
+  padding: 8px 8px 8px 14px;
+  border-radius: 28px 0 0 28px;
+  box-shadow: -3px 4px 18px rgba(0, 0, 0, 0.22);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border-right: none;
+  font-family: Arial, sans-serif;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.floating-app-strip:hover,
+.android-download-float:hover {
+  transform: translateY(-50%) translateX(-3px);
+  box-shadow: -5px 6px 22px rgba(0, 0, 0, 0.32);
+}
+
+.floating-strip-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #ffffff !important;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding-right: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.floating-strip-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.floating-strip-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.22);
+  border: none;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 2px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.floating-strip-close:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(1.12);
+}
+
+/* Floating strip responsive label display */
+.floating-app-strip .strip-text-desktop,
+.android-download-float .strip-text-desktop {
+  display: inline;
+}
+
+.floating-app-strip .strip-text-tablet,
+.android-download-float .strip-text-tablet {
+  display: none;
+}
+
+.floating-app-strip .strip-text-mobile,
+.android-download-float .strip-text-mobile {
+  display: none;
+}
+
+/* ==============================================
+   SOCIAL MEDIA & CONTENT RESPONSIVENESS
+   ============================================== */
+.social-media-section,
+.social-container,
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2vw, 14px);
+  max-width: 100%;
+  padding: 12px 16px;
+  margin: 16px auto;
+  box-sizing: border-box;
+}
+
+.social-btn,
+.social-item,
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 16px;
+  border-radius: 22px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.social-btn:hover,
+.social-item:hover,
+.social-link:hover {
+  transform: translateY(-2px);
+}
+
+/* ==============================================
+   RESPONSIVE BREAKPOINTS (DESKTOP / LAPTOP / TABLET / MOBILE)
+   ============================================== */
+
+/* 1. LAPTOP & SMALL DESKTOP (901px – 1199px) */
+@media (max-width: 1199px) and (min-width: 901px) {
+  .header-search {
+    width: 230px;
+  }
+
+  .header-search:focus-within {
+    width: 270px;
+  }
+}
+
+/* 2. TABLET (681px – 900px) */
+@media (max-width: 900px) and (min-width: 681px) {
   .header {
-    height: auto;
-    padding: 12px 0;
+    padding: 10px 18px;
+    gap: 12px;
+  }
+
+  .dl-label-desktop {
+    display: none;
+  }
+
+  .dl-label-tablet {
+    display: inline;
+  }
+
+  .header-search {
+    width: 190px;
+  }
+
+  .header-search:focus-within {
+    width: 225px;
+  }
+
+  /* Floating Strip: Tablet Label */
+  .floating-app-strip .strip-text-desktop,
+  .android-download-float .strip-text-desktop {
+    display: none;
+  }
+
+  .floating-app-strip .strip-text-tablet,
+  .android-download-float .strip-text-tablet {
+    display: inline;
+  }
+
+  .floating-app-strip .strip-text-mobile,
+  .android-download-float .strip-text-mobile {
+    display: none;
+  }
+}
+
+/* 3. MOBILE & SMALL TABLET (<= 680px) — 2 CLEAN ROWS */
+@media (max-width: 680px) {
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px 12px 14px;
+    row-gap: 10px;
+    min-height: auto;
   }
 
   .header-left {
-    padding-left: 16px;
-    gap: 10px;
+    order: 1;
+    flex: 1;
+    min-width: 0;
+    padding-left: 0;
   }
 
-  .logo {
-    width: 42px;
+  /* display: contents unrolls .header-right so child button & search bar position into the header grid/flex */
+  .header-right {
+    display: contents;
   }
 
-  .brand-text h1 {
-    font-size: 20px;
-  }
-
-  .brand-text p {
+  .header-app-dl-btn {
+    order: 2;
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: 7px 13px;
     font-size: 12px;
+    border-radius: 18px;
   }
 
-  /* Hero */
+  .dl-label-desktop {
+    display: none;
+  }
+
+  .dl-label-tablet {
+    display: inline;
+  }
+
+  .header-search {
+    order: 3;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex-basis: 100%;
+    margin-top: 4px;
+    padding: 5px 6px 5px 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .header-search:focus-within {
+    width: 100% !important;
+  }
+
+  .search-input-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .header-search input {
+    width: 100%;
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  #headerSuggestions {
+    min-width: 100%;
+    right: 0;
+    left: 0;
+    border-radius: 10px;
+    max-height: 250px;
+  }
+
+  /* Floating Strip: Mobile Label & docked position */
+  .floating-app-strip,
+  .android-download-float {
+    top: auto !important;
+    bottom: 95px !important;
+    transform: none !important;
+    padding: 7px 6px 7px 12px;
+  }
+
+  .floating-app-strip:hover,
+  .android-download-float:hover {
+    transform: translateX(-3px) !important;
+  }
+
+  .floating-app-strip .strip-text-desktop,
+  .android-download-float .strip-text-desktop {
+    display: none;
+  }
+
+  .floating-app-strip .strip-text-tablet,
+  .android-download-float .strip-text-tablet {
+    display: none;
+  }
+
+  .floating-app-strip .strip-text-mobile,
+  .android-download-float .strip-text-mobile {
+    display: inline;
+  }
+
+  .floating-strip-link {
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  /* Hero & Form adjustments for mobile */
   .hero {
-    height: auto;
-    padding: 30px 0;
+    min-height: 200px;
+    padding: 24px 0;
   }
 
   .hero-content {
     padding: 0 16px;
+    max-width: 100%;
   }
 
-  .hero h2 {
-    font-size: 22px;
+  .hero-typewriter {
+    font-size: 24px;
+    min-height: 1.3em;
   }
 
-  .hero p {
+  .hero-subtext {
     font-size: 14px;
+    min-height: 2.5em;
   }
 
-  /* Form section */
   .form-section {
-    padding: 50px 12px;
+    padding: 20px 12px;
   }
 
   .advanced-form-card {
-    padding: 28px 20px;
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px;
     border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
   }
 
-  /* Inputs */
   .input-group input,
   .input-group select {
-    padding: 14px 12px;
+    padding: 13px 12px;
     font-size: 14px;
   }
 
-  /* Button */
-  .cta-btn {
-    padding: 14px;
-    font-size: 15px;
+  .button-group {
+    flex-direction: column;
   }
 
-  /* Scan button */
+  .cta-btn,
+  .clear-btn {
+    width: 100%;
+  }
+
   .scan-btn {
     width: 100%;
   }
 
-  /* Nutrition table */
   .nutrition-table {
     font-size: 13px;
-  }
-
-  /* Table horizontal scroll */
-  .nutrition-table {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
   }
 
-  /* Chart */
   .chart-wrapper {
     height: 180px;
   }
 
-  /* Footer */
   .footer-container {
-    padding: 30px 20px;
+    padding: 28px 16px;
     gap: 20px;
   }
 
-  .footer-bottom {
-    font-size: 12px;
+  /* Compare FAB adjusts safely */
+  #compareFab {
+    bottom: 24px !important;
+    right: 18px !important;
+    padding: 12px 18px !important;
+    font-size: 14px !important;
+  }
+
+  .compare-vs {
+    width: 100%;
+    padding: 8px 0;
   }
 }
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
+
+/* 4. VERY SMALL MOBILE (<= 380px) */
+@media (max-width: 380px) {
+  .logo {
+    width: 36px;
+  }
+
+  .brand-text h1 {
+    font-size: 18px;
+  }
+
+  .brand-text p {
+    display: none;
+  }
+
+  .dl-label-tablet {
+    display: none;
+  }
+
+  .header-app-dl-btn {
+    padding: 6px 10px;
+    border-radius: 16px;
+    font-size: 14px;
+  }
+
+  .floating-strip-close {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+
+  .search-placeholder-anim {
+    font-size: 12px;
+  }
+
+  .search-prefix {
+    display: none;
+  }
+}
+
+/* Compare VS styles */
+.compare-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #999;
+  padding: 0 10px;
 }
